@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkWindow" id="MainWin">
+    <property name="width_request">400</property>
+    <property name="height_request">300</property>
+    <property name="icon_name">audio-x-generic</property>
+    <signal name="destroy" handler="on_MainWin_destroy"/>
+    <child>
+      <object class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkScrolledWindow" id="scrolledwindow1">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="hscrollbar_policy">automatic</property>
+            <property name="vscrollbar_policy">automatic</property>
+            <child>
+              <object class="GtkTreeView" id="playlist">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="rubber_banding">True</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="remove">
+            <property name="label" translatable="yes">Drag here to remove from playlist</property>
+            <property name="track_visited_links">False</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkToolbar" id="toolbar">
+            <property name="visible">True</property>
+            <property name="toolbar_style">icons</property>
+            <property name="show_arrow">False</property>
+            <property name="icon_size">2</property>
+            <property name="icon_size_set">True</property>
+            <child>
+              <object class="GtkToolButton" id="btn_prev">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">prev</property>
+                <property name="icon_name">media-skip-backward</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="btn_play">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">play</property>
+                <property name="icon_name">media-playback-start</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="btn_stop">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">stop</property>
+                <property name="icon_name">media-playback-stop</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkMenuToolButton" id="btn_next">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">next</property>
+                <property name="icon_name">media-skip-forward</property>
+                <property name="menu">mode_menu</property>
+                <child>
+                  <object class="GtkMenu" id="mode_menu">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkRadioMenuItem" id="linear">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Linear</property>
+                        <property name="use_underline">True</property>
+                        <property name="active">True</property>
+                        <property name="draw_as_radio">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkRadioMenuItem" id="repeat">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Single</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_as_radio">True</property>
+                        <property name="group">linear</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkRadioMenuItem" id="random">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Random</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_as_radio">True</property>
+                        <property name="group">repeat</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparatorToolItem" id="toolbutton1">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolItem" id="tlbr_seek">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkHScale" id="progress">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="draw_value">False</property>
+                    <property name="value_pos">right</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolItem" id="tlbr_time">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkLabel" id="time">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">00:00 / 00:00</property>
+                    <property name="track_visited_links">False</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

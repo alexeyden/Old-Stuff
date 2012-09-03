@@ -1,0 +1,27 @@
+About
+=====
+Emacs-keys is a Geany plugin that provides support of Emacs-like keybindings
+
+Keybindings
+===========
+Implemented keybindings:
+* C-x C-s 	* C-/
+* C-n 		* C-x C-f
+* C-p 		* C-o
+* C-b  		* M-S-Backspace
+* C-f       * M-<
+* C-k 		* M->
+* M-f       * M-g (goto-line)
+* M-b
+* C-a
+* C-e
+
+Note: some keybindings can work not exactly like in Emacs
+
+Installation
+============
+$ cd src
+$ make
+$ make install
+
+Default installation path: $HOME/.config/geany/plugins/

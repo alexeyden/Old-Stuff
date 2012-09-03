@@ -1,0 +1,84 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Wed Sep 15 13:50:46 2010
+;; Desktop file format version 206
+;; Emacs version 23.2.1
+
+;; Global section:
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring '("keychar"))
+(setq regexp-search-ring nil)
+(setq register-alist '((114 "                                     " "                                     " "mand_func)(void* param);             " "                                     " "acs_hotkey                           " "                                     " "                                     " "                                     " ";                                    " "                                     " "                                     " "al;       /* for one key: C-[x] */   " "al_range; /* for key in some range (o" "al_repeat; /* for commands like C-x r")))
+(setq file-name-history '("~/Devel/Code/Geany-Emacs-keys/src/" "~/Devel/Code/Tests/olimp_1.c" "~/Devel/Code/Tests/Olimp/1.c" "~/Devel/Code/Olimp" "~/Devel/Code/Geany-Emacs-keys/src/Project.ede" "~/Devel/Code/EpicBotBattle/" "~/Devel/Code/Geany-Emacs-keys/src/commands.h" "~/Devel/Code/Geany-Emacs-keys/src/commands.c" "~/Devel/Code/Geany-Emacs-keys/src/commands.h" "~/" "~/Devel/Code/Geany-Emacs-keys/src/"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/xel/Devel/Code/Geany-Emacs-keys/src/main.c"
+  "main.c"
+  'c-mode
+  '(auto-fill-mode abbrev-mode linum-mode semantic-stickyfunc-mode semantic-highlight-func-mode ede-minor-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-idle-local-symbol-highlight-mode semantic-idle-completions-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode auto-complete-mode hs-minor-mode)
+  5912
+  '(5890 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix) (overwrite-mode) (fill-column . 36)))
+
+(desktop-create-buffer 206
+  "/home/xel/Devel/Code/Geany-Emacs-keys/src/commands.h"
+  "commands.h"
+  'c-mode
+  '(auto-fill-mode abbrev-mode linum-mode semantic-stickyfunc-mode semantic-highlight-func-mode ede-minor-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-idle-local-symbol-highlight-mode semantic-idle-completions-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode auto-complete-mode hs-minor-mode)
+  582
+  '(312 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/xel/Devel/Code/Geany-Emacs-keys/src/global.h"
+  "global.h"
+  'c-mode
+  '(auto-fill-mode abbrev-mode linum-mode semantic-stickyfunc-mode semantic-highlight-func-mode ede-minor-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-idle-local-symbol-highlight-mode semantic-idle-completions-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode auto-complete-mode hs-minor-mode)
+  192
+  '(198 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/xel/Devel/Code/Geany-Emacs-keys/src/commands.c"
+  "commands.c"
+  'c-mode
+  '(auto-fill-mode abbrev-mode linum-mode semantic-stickyfunc-mode semantic-highlight-func-mode ede-minor-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-idle-local-symbol-highlight-mode semantic-idle-completions-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode auto-complete-mode hs-minor-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/xel/Devel/Code/Geany-Emacs-keys/src/keymap.h"
+  "keymap.h"
+  'c-mode
+  '(auto-fill-mode abbrev-mode linum-mode semantic-stickyfunc-mode semantic-highlight-func-mode ede-minor-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-idle-local-symbol-highlight-mode semantic-idle-completions-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode auto-complete-mode hs-minor-mode)
+  1091
+  '(124 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/xel/Devel/Code/Geany-Emacs-keys/src/keymap.c"
+  "keymap.c"
+  'c-mode
+  '(auto-fill-mode abbrev-mode linum-mode semantic-stickyfunc-mode semantic-highlight-func-mode ede-minor-mode senator-minor-mode semantic-idle-scheduler-mode semantic-idle-summary-mode semantic-idle-local-symbol-highlight-mode semantic-idle-completions-mode semantic-mru-bookmark-mode semantic-decoration-mode semantic-tag-folding-mode auto-complete-mode hs-minor-mode)
+  4314
+  '(4302 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix) (overwrite-mode)))
+
