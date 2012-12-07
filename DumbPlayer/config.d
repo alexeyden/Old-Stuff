@@ -1,2 +1,2 @@
 module config;
-const DATA_DIR = "/usr/share/dumbplayer";
+const DATA_DIR = "data";

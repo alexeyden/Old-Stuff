@@ -88,7 +88,7 @@ class Player
 			
 			Value v = new Value();
 			v.init(GType.OBJECT);	
-			v.setObject( fake_sink.getElementStruct() );		
+			v.setObject( fake_sink.getElementStruct() );
 			
 			source.setProperty("video-sink",v);
 		}
@@ -148,7 +148,7 @@ class Player
 			{
 				TreeIter it = new TreeIter(playlist,now_playing.getTreePath());
 			
-				switch(mode)
+				final switch(mode)
 				{
 					case PlayMode.LINEAR:
 						if(!playlist.iterNext(it))
@@ -177,7 +177,7 @@ class Player
 			{
 				TreeIter it = new TreeIter(playlist,now_playing.getTreePath());
 				
-				switch(mode)
+				final switch(mode)
 				{
 					case PlayMode.LINEAR:
 						TreePath p = it.getTreePath();
@@ -211,9 +211,9 @@ class Player
 		/* playlist */
 		void add(string path)
 		{	
-			if(isdir(path))
+			if(isDir(path))
 			{
-				foreach(string s; listdir(path))
+				foreach(string s; dirEntries(path,SpanMode.depth))
 				{
 					this.add(path~"/"~s);
 				}
@@ -224,7 +224,7 @@ class Player
 				this.playlist.append(it);
 	
 				playlist.setValue(it, 0, false);
-				playlist.setValue(it, 1, basename(path));
+				playlist.setValue(it, 1, baseName(path));
 				playlist.setValue(it, 2, path);
 			}
 		}

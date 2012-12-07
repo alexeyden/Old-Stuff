@@ -4,25 +4,33 @@ datadir=$(prefix)/share
 
 DC=dmd
 EXE=dumbplayer
-FLAGS=-L-lm -L-lpthread -L-ldl -L-lgtkd -L-lgstreamerd -L-lphobos2
+FLAGS=-L-ldl -Ilibs/GtkD/BBB/include/d/gtkd-2
+GTKD_LIBS=libs/GtkD/libgstreamerd-1.a libs/GtkD/libgtkd-2.a 
 SRC=main.d player.d
 
-all: $(SRC)
+BUILDMODE=-debug
+
+FULL_CMD=$(DC) -O $(BUILDMODE) $(FLAGS) $(SRC) config.d $(GTKD_LIBS) -of$(EXE)
+
+all: build-libs dumbplayer
+
+dumbplayer:
 	echo -e "module config;\nconst DATA_DIR = \"$(datadir)/$(EXE)\";" > config.d
-	$(DC) -O -release $(SRC) $(FLAGS) -of$(EXE)
+	$(FULL_CMD)
+
+build-libs:
+	echo "BULDING LIBS"
 
 clean:
-	rm *.o
-	rm config.d
+	rm local/*.o || (rm *.o rm config.d)
 #	rm $(EXE)
 
-local:
+local: build-libs
 	echo -e "module config;\nconst DATA_DIR = \"data\";" > config.d
-	$(DC) -O -release $(SRC) $(FLAGS) -of$(EXE)
-	mkdir ./bin
-	mkdir ./bin/data
-	cp $(EXE) ./bin/
-	cp ./data/* ./bin/data/
+	$(FULL_CMD:-of$(EXE)=-oflocal/$(EXE))
+	test -e "local" || mkdir "local"
+	test -e "local/data" || mkdir "local/data"
+	cp data/* local/data/
 
 install:
 	strip $(EXE)

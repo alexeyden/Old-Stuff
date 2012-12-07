@@ -9,7 +9,6 @@ import gtk.ToolButton;
 import gtk.MenuToolButton;
 import gtk.Main;
 import gtk.Builder;
-import gtk.ObjectGtk;
 import gtk.ListStore;
 import gtk.TreeModel;
 import gtk.TreePath;
@@ -23,6 +22,7 @@ import gtk.MenuItem;
 import gtk.PopupBox;
 import gtk.CellRendererText;
 import gtk.CellRendererToggle;
+import gtk.SelectionData;
 import gtk.DragAndDrop;
 import gobject.Value;
 import gdk.Event;
@@ -44,11 +44,13 @@ import gstreamer.Format;
 import gstreamerc.gstreamertypes;
 
 import std.path;
-import std.c.stdio;
+//import std.c.stdio;
+import std.stdio;
 import std.file;
 import std.string;
 import std.uri;
 import std.stdio;
+import std.array;
 
 import player;
 import config;
@@ -78,69 +80,29 @@ class DPlayer: Player
 		
 		void setup_gui(TreeModelIF model,string ui_file)
 		{
-			//load UI file
 			builder = new Builder();
-			int status = builder.addFromFile(ui_file);
-			if(!status)
+			if(!builder.addFromFile(ui_file))
+			{
+				stderr.writeln("Cannot open UI file!");
 				Main.quit();
-				
-			//set UI widgets
-			auto obj = builder.getObject("MainWin"); 
-			obj.setData("GObject", null); 
-			main_win = new Window(cast(GtkWindow*)obj.getObjectGStruct());
+			}
 			
+			main_win = cast(Window) builder.getObject("MainWin");
 			
-			/* playing control buttons */
-			obj = builder.getObject("btn_play"); 
-			obj.setData("GObject", null); 
-			toggle_play = new ToolButton(cast(GtkToolButton*)obj.getObjectGStruct());
+			toggle_play = cast(ToolButton) builder.getObject("btn_play");		
+			btn_stop = cast(ToolButton) builder.getObject("btn_stop");
+			btn_next = cast(MenuToolButton) builder.getObject("btn_next");
+			btn_prev = cast(ToolButton) builder.getObject("btn_prev");
 			
-			obj = builder.getObject("btn_stop"); 
-			obj.setData("GObject", null); 
-			btn_stop = new ToolButton(cast(GtkToolButton*)obj.getObjectGStruct());
+			seek = cast(HScale) builder.getObject("progress");
+			time = cast(Label) builder.getObject("time");
 			
-			obj = builder.getObject("btn_next"); 
-			obj.setData("GObject", null); 
-			btn_next = new MenuToolButton(cast(GtkMenuToolButton*)obj.getObjectGStruct());
+			remove_area = cast(Label) builder.getObject("remove");
+			list = cast(TreeView) builder.getObject("playlist");
 			
-			obj = builder.getObject("btn_prev"); 
-			obj.setData("GObject", null); 
-			btn_prev = new ToolButton(cast(GtkToolButton*)obj.getObjectGStruct());
-			
-			
-			/* time widgets */
-			obj = builder.getObject("progress"); 
-			obj.setData("GObject", null); 
-			seek = new HScale(cast(GtkHScale*)obj.getObjectGStruct());
-			
-			obj = builder.getObject("time"); 
-			obj.setData("GObject", null); 
-			time = new Label(cast(GtkLabel*)obj.getObjectGStruct());
-			
-			
-			/* playlist and remove area widgets */
-			obj = builder.getObject("remove"); 
-			obj.setData("GObject", null); 
-			remove_area = new Label(cast(GtkLabel*)obj.getObjectGStruct());
-			
-			obj = builder.getObject("playlist"); 
-			obj.setData("GObject", null); 
-			list = new TreeView(cast(GtkTreeView*)obj.getObjectGStruct());
-			
-			
-			/* playlist mode menu items */
-			obj = builder.getObject("linear"); 
-			obj.setData("GObject", null); 
-			item_linear = new RadioMenuItem(cast(GtkRadioMenuItem*)obj.getObjectGStruct());
-			
-			obj = builder.getObject("random"); 
-			obj.setData("GObject", null); 
-			item_random = new RadioMenuItem(cast(GtkRadioMenuItem*)obj.getObjectGStruct());
-			
-			obj = builder.getObject("repeat"); 
-			obj.setData("GObject", null); 
-			item_repeat = new RadioMenuItem(cast(GtkRadioMenuItem*)obj.getObjectGStruct());
-				
+			item_linear = cast(RadioMenuItem) builder.getObject("linear");
+			item_random = cast(RadioMenuItem) builder.getObject("random");
+			item_repeat = cast(RadioMenuItem) builder.getObject("repeat");
 				
 			/* playlist columns */
 			auto toggle_renderer = new CellRendererToggle();
@@ -184,13 +146,12 @@ class DPlayer: Player
 			DragAndDrop.destSet(
 				cast(Widget) this.remove_area,
 				GtkDestDefaults.ALL,
-				&playlist_te,
-				1,
+				[playlist_te],
 				DragAction.ACTION_COPY | DragAction.ACTION_MOVE
 			);
 		}
 	
-		void onWinDestroy(ObjectGtk w) { Main.quit(); }
+		void onWinDestroy(Widget w) { Main.quit(); }
 		void onButtonStop(ToolButton w)
 		{
 			stop(); 
@@ -216,8 +177,8 @@ class DPlayer: Player
 					toggle_play.setIconName("gtk-media-pause");
 			}
 		}
-		void onDragStart(GdkDragContext* dc,Widget w) { remove_area.show(); }
-		void onDragStop(GdkDragContext* dc,Widget w) { remove_area.hide(); }
+		void onDragStart(DragContext dc,Widget w) { remove_area.show(); }
+		void onDragStop(DragContext dc,Widget w) { remove_area.hide(); }
 		void onPlaySelected(TreePath p, TreeViewColumn c, TreeView v)
 		{
 			TreeIter it = list.getSelection().getSelected();
@@ -229,12 +190,11 @@ class DPlayer: Player
 		}
 		
 		void
-		onDropData(GdkDragContext* dc, int x, int y,
-					GtkSelectionData* data, uint info, uint time, Widget w)
+		onDropData(DragContext dc, int x, int y,SelectionData data, uint info, uint time, Widget w)
 		{
 			if (info == DRAG_DEST_ID)
 			{
-				string dat = Str.toString(data.data);
+				string dat = Str.toString(data.dataGetText());
 				replace(dat,"\r\n","");
 				string[] splitted = split(dat);
 				
@@ -245,21 +205,21 @@ class DPlayer: Player
 			}
 		}
 		
-		bool onDragDropRemArea(GdkDragContext* dc, int x, int y,uint time, Widget w)
+		bool onDragDropRemArea(DragContext dc, int x, int y,uint time, Widget w)
 		{
-			DragAndDrop context_dd = new DragAndDrop(dc);
-			context_dd.finish(1,1,time);
+			//DragAndDrop context_dd = new DragAndDrop(dc);
+			//context_dd.finish(1,1,time);
 
 			return true;
 		}
 		
-		bool onSeekingStart(GdkEventButton* ev, Widget w)
+		bool onSeekingStart(Event ev, Widget w)
 		{	
 			is_seeking = true;
 			
 			return false;
 		}
-		bool onSeekingStop(GdkEventButton* ev, Widget w)
+		bool onSeekingStop(Event ev, Widget w)
 		{
 			is_seeking = false;
 			
@@ -326,21 +286,21 @@ class DPlayer: Player
 			btn_stop.addOnClicked(&this.onButtonStop);
 			btn_prev.addOnClicked(&this.onButtonPrev);
 			btn_next.addOnClicked(&this.onButtonNext);
-			
+
 			//on play
 			list.addOnRowActivated(&this.onPlaySelected);
-			
+
 			//seeking
-			seek.addOnButtonRelease(&this.onSeekingStop);
-			seek.addOnButtonPress(&this.onSeekingStart);
+			//seek.addOnButtonRelease(&this.onSeekingStop);
+			//seek.addOnButtonPress(&this.onSeekingStart);
 			
 			//playing mode switch
 			item_linear.addOnActivate(&this.onModeLinear);
 			item_repeat.addOnActivate(&this.onModeRepeat);
 			item_random.addOnActivate(&this.onModeRandom);
-			
+
 			label_updater = new Timeout(&this.updatePosition,1,GPriority.DEFAULT,false);
-			
+
 			//set window icon
 			if(exists(DATA_DIR~"/scalable.svg"))
 				main_win.setIconFromFile(DATA_DIR~"/scalable.svg");
@@ -355,9 +315,6 @@ class DPlayer: Player
 
 int main(string[] args)
 {
-	Main.init(args);
-	GStreamer.init(args);
-	
 	foreach(s;args)
 	{
 		if(s == "--help" || s == "-h")
@@ -366,6 +323,9 @@ int main(string[] args)
 			return 0;
 		}
 	}
+
+	Main.init(args);
+	GStreamer.init(args);
 	
 	string ui_file = DATA_DIR~"/gui.xml";
 
