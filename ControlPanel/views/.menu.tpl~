@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+</head>
+
+<body>
+	<div id="frame">
+		<div id="title">
+			<ul class="path">
+			%for path_item in path:
+				<li class="path">
+					<a href="{{path_item[1]}}" class="menu_item">{{path_item[0]}}</a>
+				</li>
+			%end
+			</ul>
+		</div>
+		<div id="menu">
+			%for item in menu_items:
+			<div class="menu_item" onclick="location.href='{{item[1]}}';">
+				<div class="menu_img">
+					<img src="/static/images/menu/{{item[2]}}" class="menu_item">
+				</div>
+				<span class="menu_item">{{item[0]}}</span>
+			</div>
+			%end
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" href="/style/style.css">
+</head>
+
+<body>
+	<div class="frame">
+		<div class="title">
+			<ul class="path">
+			%for nav_item in nav_menu:
+				<li class="path">
+					<a href="{{nav_item[1]}}" class="path">{{nav_item[0]}}</a>
+				</li>
+			%end
+			</ul>
+		</div>
+		%if actions:
+			<div class="actions">
+			</div>
+		%end
+		%include
+	</div>
+</body>
+
+</html>
+
