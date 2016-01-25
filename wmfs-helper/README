@@ -1,2 +1,0 @@
-This is daemon that provides another way to set a status text in WMFS.
-It supports time,date,volume(ALSA) and battery level info fields. Execute "wmfs-helper -h" for usage help

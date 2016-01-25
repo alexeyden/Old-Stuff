@@ -1,8 +1,0 @@
-#tileset grassland                                 | tileset type (tileset must contain <= 9 tiles)
-#data 0123400000123 ...                            | tiles data (map size must be 96x96)
-#spawn <x> <y>                                     | player spawnpoint
-#teleport <x> <y> <id> <dest_id or somemap.txt>    | teleport
-#sign <x> <y> <text>                               | sign with some text
-#item <x> <y> <level> <id>                         | item with <id> (if <level>==0) or random item with <level>
-#shop <x> <y>                                      | shop with random items
-#monster <x> <y> <type> <level>                    | monster (types are snake,skeleton,orc,dog,boss_knight,boss_mage)
